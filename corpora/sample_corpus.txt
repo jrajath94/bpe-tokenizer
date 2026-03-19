@@ -1,0 +1,77 @@
+The quick brown fox jumps over the lazy dog.
+The dog barked at the fox as it ran through the forest.
+Machine learning is a branch of artificial intelligence.
+Natural language processing allows computers to understand human language.
+Tokenization is the process of splitting text into smaller units called tokens.
+Each token is assigned a unique integer identifier in the vocabulary.
+The vocabulary is built by training on a large corpus of text.
+Byte-pair encoding works by iteratively merging the most frequent pairs of symbols.
+WordPiece uses a likelihood-based criterion to select the best merges.
+The transformer architecture relies heavily on the tokenizer for input processing.
+Attention mechanisms allow models to focus on relevant parts of the input.
+BERT uses WordPiece tokenization with a vocabulary of about 30,000 tokens.
+GPT-2 uses byte-level BPE with a vocabulary of 50,257 tokens.
+A larger vocabulary means fewer tokens per sentence but more parameters.
+A smaller vocabulary means more tokens but requires less memory.
+The compression ratio is the average number of characters per token.
+English text typically achieves a compression ratio of about 4 characters per token.
+Code tends to have lower compression ratios due to whitespace and special characters.
+Emoji are expensive in terms of tokens because they require many bytes in UTF-8.
+Chinese characters each encode to one or two tokens in most modern tokenizers.
+The unknown token is used for characters or words not seen during training.
+Special tokens like CLS and SEP are used in BERT for classification and sentence pairs.
+The padding token is used to make all sequences in a batch the same length.
+Pre-tokenization splits text into words before the subword tokenization step.
+GPT-2 uses a regex-based pre-tokenizer that preserves contractions like don't and it's.
+BERT uses whitespace and punctuation splitting as its pre-tokenization strategy.
+The merge rules are applied in order of their rank during encoding.
+Lower rank means higher priority, so the most frequent merges are applied first.
+At inference time, the tokenizer applies merge rules greedily from left to right.
+The vocabulary file stores the token-to-id mapping and the ordered merge rules.
+Training a tokenizer on domain-specific data improves performance on that domain.
+Code models often train separate tokenizers to handle programming language syntax.
+The Llama model uses SentencePiece unigram tokenization rather than BPE.
+Tiktoken is OpenAI's fast BPE tokenizer written in Rust with Python bindings.
+The HuggingFace tokenizers library provides fast implementations of many algorithms.
+Understanding tokenization from first principles helps debug production issues.
+Why does gpt-4 tokenize differently from gpt4? The hyphen creates a token boundary.
+Whitespace is often included as part of the token that follows it in GPT-2 style.
+This means the token for ' hello' with a leading space is different from 'hello'.
+Token fertility is the ratio of tokens to words in a given text.
+High fertility means the tokenizer is splitting words into many subword pieces.
+Low fertility indicates the tokenizer has seen these words during training.
+The vocabulary size is a hyperparameter that trades off compression vs memory.
+Ten thousand tokens is often used for small experiments and demonstrations.
+Thirty thousand tokens is the size used by BERT for English text.
+Fifty thousand tokens is common for multilingual models covering many languages.
+The initial vocabulary for byte-level BPE always has exactly 256 tokens.
+One for each possible byte value from 0x00 to 0xFF.
+This guarantees that any UTF-8 text can be encoded without any unknown tokens.
+The roundtrip property ensures that decode(encode(text)) equals the original text.
+This property is critical for any production tokenizer deployment.
+Failing the roundtrip test means the tokenizer is lossy and cannot be trusted.
+Tokenization bugs are some of the hardest to debug because they happen silently.
+A missing space can change the meaning of an entire sentence after tokenization.
+The vocabulary file should be treated as part of the model checkpoint.
+Changing the vocabulary requires retraining the entire model from scratch.
+This is why tokenizer design decisions are made carefully before training begins.
+The embedding layer has one row per vocabulary token so vocabulary size matters.
+Research on optimal vocabulary sizes suggests 32k-100k is best for large models.
+Subword regularization adds noise during training to improve robustness.
+SentencePiece implements subword regularization via sampling from the lattice.
+The lattice represents all possible tokenizations of a given sentence.
+BPE dropout is a technique that randomly skips some merge rules during training.
+This forces the model to handle multiple tokenizations of the same word.
+Language models are surprisingly sensitive to tokenization choices.
+Studies show that tokenizer choice can affect downstream task performance.
+The relationship between tokens and meaning is not straightforward.
+Homographs like bank can have very different token sequences in context.
+Multilingual tokenizers must balance coverage across many scripts and languages.
+The Latin script is over-represented in most English-centric tokenizers.
+This causes non-Latin scripts to have higher token counts for the same content.
+Vocabulary allocation is therefore a fairness issue in multilingual NLP.
+The Bloom model addressed this by training a tokenizer on balanced multilingual data.
+Understanding these tradeoffs is essential for anyone building LLM infrastructure.
+Tokenization is the foundation that everything else in language modeling builds on.
+Getting it right from the start saves enormous amounts of compute downstream.
+The best tokenizer is one that you deeply understand and can debug in production.

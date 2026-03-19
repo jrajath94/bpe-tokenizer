@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bpe-tokenizer"
+version = "0.1.0"
+description = "BPE and WordPiece tokenization from scratch — clean implementations matching HuggingFace output"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Rajath John", email = "jrajath94@gmail.com" }]
+keywords = ["tokenization", "bpe", "wordpiece", "nlp", "llm", "transformers"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "ruff>=0.1.0",
+    "mypy>=1.5",
+]
+
+[project.scripts]
+bpe-tokenizer = "bpe_tokenizer.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/jrajath94/bpe-tokenizer"
+Repository = "https://github.com/jrajath94/bpe-tokenizer"
+Issues = "https://github.com/jrajath94/bpe-tokenizer/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--cov=bpe_tokenizer",
+    "--cov-report=term-missing",
+    "--cov-report=xml",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+disallow_untyped_defs = true
+warn_return_any = false
+warn_unused_configs = true
