@@ -24,7 +24,6 @@ import logging
 import time
 from collections import defaultdict
 from pathlib import Path
-from typing import Optional
 
 from .base import BaseTokenizer
 from .exceptions import DecodingError, EncodingError, VocabBuildError
@@ -170,7 +169,7 @@ class BPETokenizer(BaseTokenizer):
         # Ordered list of merge rules: (rank, (left, right)) → merged token
         # Lower rank = applied first during encoding
         self._merge_rank: dict[tuple[str, str], int] = {}
-        self._pretokenizer: Optional[PreTokenizer] = None
+        self._pretokenizer: PreTokenizer | None = None
 
     def train(
         self,
@@ -467,7 +466,7 @@ class BPETokenizer(BaseTokenizer):
         save_vocabulary(self._vocab, Path(path))
 
     @classmethod
-    def load(cls, path: Path) -> "BPETokenizer":
+    def load(cls, path: Path) -> BPETokenizer:
         """Load a BPE tokenizer from a saved vocabulary file.
 
         Args:

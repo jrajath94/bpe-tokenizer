@@ -2,10 +2,7 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
-
-import pytest
 
 from bpe_tokenizer import BPETokenizer
 from bpe_tokenizer.cli import build_parser, cmd_compare, cmd_decode, cmd_encode, cmd_info, cmd_train

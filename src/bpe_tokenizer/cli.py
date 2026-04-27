@@ -93,7 +93,7 @@ def cmd_train(args: argparse.Namespace) -> int:
     stats = tokenizer.train(corpus, args.vocab_size)
     tokenizer.save(output_path)
 
-    print(f"Training complete!")
+    print("Training complete!")
     print(f"  Tokenizer type : {args.type.upper()}")
     print(f"  Final vocab    : {stats.final_vocab_size} tokens")
     print(f"  Merges         : {stats.num_merges}")

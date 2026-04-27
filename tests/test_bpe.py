@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import textwrap
 from pathlib import Path
 
 import pytest
@@ -10,10 +9,8 @@ import pytest
 from bpe_tokenizer import BPETokenizer
 from bpe_tokenizer.bpe import END_OF_WORD, _build_word_freqs, _get_pair_frequencies, _merge_pair
 from bpe_tokenizer.exceptions import DecodingError, EncodingError, VocabBuildError
-from bpe_tokenizer.pretokenizer import PreTokenizerType
 
-from .conftest import MEDIUM_CORPUS, SMALL_CORPUS
-
+from .conftest import SMALL_CORPUS
 
 # ---------------------------------------------------------------------------
 # Internal algorithm tests

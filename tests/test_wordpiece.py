@@ -16,8 +16,7 @@ from bpe_tokenizer.wordpiece import (
     _word_to_initial_tokens,
 )
 
-from .conftest import MEDIUM_CORPUS, SMALL_CORPUS
-
+from .conftest import SMALL_CORPUS
 
 # ---------------------------------------------------------------------------
 # Internal algorithm tests

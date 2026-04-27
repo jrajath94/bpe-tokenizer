@@ -10,9 +10,6 @@ import pytest
 
 from bpe_tokenizer import BPETokenizer, WordPieceTokenizer
 
-from .conftest import SMALL_CORPUS
-
-
 # ---------------------------------------------------------------------------
 # BPE roundtrip tests
 # ---------------------------------------------------------------------------

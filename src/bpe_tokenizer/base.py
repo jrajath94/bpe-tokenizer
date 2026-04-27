@@ -9,7 +9,6 @@ from __future__ import annotations
 import logging
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Optional
 
 from .vocab import TokenizerConfig, TrainingStats, Vocabulary
 
@@ -28,7 +27,7 @@ class BaseTokenizer(ABC):
 
     def __init__(self) -> None:
         """Initialize an untrained tokenizer with an empty vocabulary."""
-        self._vocab: Optional[Vocabulary] = None
+        self._vocab: Vocabulary | None = None
         self._is_trained: bool = False
 
     @property
@@ -100,7 +99,7 @@ class BaseTokenizer(ABC):
 
     @classmethod
     @abstractmethod
-    def load(cls, path: Path) -> "BaseTokenizer":
+    def load(cls, path: Path) -> BaseTokenizer:
         """Load a trained tokenizer from a saved vocabulary file.
 
         Args:
@@ -111,7 +110,7 @@ class BaseTokenizer(ABC):
         """
         ...
 
-    def token_to_id(self, token: str) -> Optional[int]:
+    def token_to_id(self, token: str) -> int | None:
         """Look up the integer ID for a token string.
 
         Args:
@@ -124,7 +123,7 @@ class BaseTokenizer(ABC):
             return None
         return self._vocab.token_to_id.get(token)
 
-    def id_to_token(self, token_id: int) -> Optional[str]:
+    def id_to_token(self, token_id: int) -> str | None:
         """Look up the token string for an integer ID.
 
         Args:
@@ -138,7 +137,7 @@ class BaseTokenizer(ABC):
         return self._vocab.id_to_token.get(token_id)
 
     @property
-    def config(self) -> Optional[TokenizerConfig]:
+    def config(self) -> TokenizerConfig | None:
         """The tokenizer configuration, or None if untrained."""
         return self._vocab.config if self._vocab else None
 

@@ -8,15 +8,14 @@ from __future__ import annotations
 
 import logging
 import unicodedata
-from typing import Optional
 
 logger = logging.getLogger(__name__)
 
 # GPT-2-style byte-to-unicode mapping: maps all 256 byte values to printable
 # Unicode characters so that every byte in UTF-8 can be a vocabulary token.
 # This avoids collisions with actual text characters.
-_BYTE_TO_UNICODE: Optional[dict[int, str]] = None
-_UNICODE_TO_BYTE: Optional[dict[str, int]] = None
+_BYTE_TO_UNICODE: dict[int, str] | None = None
+_UNICODE_TO_BYTE: dict[str, int] | None = None
 
 # Special tokens used by BERT-style tokenizers
 BERT_SPECIAL_TOKENS = {

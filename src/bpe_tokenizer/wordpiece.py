@@ -28,12 +28,11 @@ import logging
 import time
 from collections import defaultdict
 from pathlib import Path
-from typing import Optional
 
 from .base import BaseTokenizer
 from .exceptions import DecodingError, EncodingError, VocabBuildError
 from .pretokenizer import PreTokenizer, PreTokenizerType
-from .unicode_utils import BERT_SPECIAL_TOKENS, WORDPIECE_CONTINUATION_PREFIX, normalize_unicode
+from .unicode_utils import WORDPIECE_CONTINUATION_PREFIX, normalize_unicode
 from .vocab import (
     TokenizerConfig,
     TrainingStats,
@@ -183,7 +182,7 @@ class WordPieceTokenizer(BaseTokenizer):
     def __init__(self) -> None:
         """Initialize an untrained WordPiece tokenizer."""
         super().__init__()
-        self._pretokenizer: Optional[PreTokenizer] = None
+        self._pretokenizer: PreTokenizer | None = None
         self._unk_token_id: int = -1
 
     def train(
@@ -464,7 +463,7 @@ class WordPieceTokenizer(BaseTokenizer):
         save_vocabulary(self._vocab, Path(path))
 
     @classmethod
-    def load(cls, path: Path) -> "WordPieceTokenizer":
+    def load(cls, path: Path) -> WordPieceTokenizer:
         """Load a WordPiece tokenizer from a saved vocabulary file.
 
         Args:

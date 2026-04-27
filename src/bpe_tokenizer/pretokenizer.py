@@ -12,11 +12,11 @@ from __future__ import annotations
 
 import logging
 import re
+from collections.abc import Callable
 from enum import Enum, auto
-from typing import Callable
 
 from .exceptions import PreTokenizationError
-from .unicode_utils import is_punctuation, is_whitespace
+from .unicode_utils import is_punctuation
 
 logger = logging.getLogger(__name__)
 

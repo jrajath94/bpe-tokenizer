@@ -11,7 +11,6 @@ import json
 import logging
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
-from typing import Optional
 
 from .exceptions import TokenizerLoadError
 
@@ -58,8 +57,8 @@ class TokenizerConfig:
     vocab_size: int
     tokenizer_type: str
     pretokenizer_type: str = "gpt2"
-    unk_token: Optional[str] = None
-    continuation_prefix: Optional[str] = None
+    unk_token: str | None = None
+    continuation_prefix: str | None = None
     version: str = VOCAB_FORMAT_VERSION
 
 
