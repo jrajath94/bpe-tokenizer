@@ -1,6 +1,6 @@
 # bpe-tokenizer
 
-> From-scratch BPE and WordPiece tokenization in pure Python — zero dependencies, 151K tokens/sec, 92% test coverage.
+> From-scratch BPE and WordPiece tokenization in pure Python — zero dependencies, 92% test coverage.
 
 [![CI](https://github.com/jrajath94/bpe-tokenizer/actions/workflows/ci.yml/badge.svg)](https://github.com/jrajath94/bpe-tokenizer/actions/workflows/ci.yml)
 [![Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen)](https://github.com/jrajath94/bpe-tokenizer)
@@ -9,7 +9,7 @@
 
 ## Why This Exists
 
-HuggingFace's tokenizer is a Rust binary that produces correct output but gives you no insight into how it works. For alignment researchers and anyone building custom vocabularies, the implementation details matter. This is a from-scratch Python BPE and WordPiece implementation — readable, tested, and fast enough to use in practice (151K tokens/sec BPE, 536K tokens/sec WordPiece).
+HuggingFace's tokenizer is a Rust binary that produces correct output but gives you no insight into how it works. For alignment researchers and anyone building custom vocabularies, the implementation details matter. This is a from-scratch Python BPE and WordPiece implementation — readable, tested, and fast enough to use in practice.
 
 Most engineers treat `tokenizer.encode(text)` as a black box. This leads to hard-to-debug bugs: why is `gpt-4` 3 tokens but `gpt4` is 2? Why are emoji expensive? Why does code need a different vocabulary? Building both algorithms from scratch answers these questions and reveals the implementation decisions that make tokenization production-safe.
 
@@ -76,19 +76,19 @@ assert bpe.encode("test") == bpe2.encode("test")
 |----------|-----------|----------------------|---------|
 | Byte-level encoding (GPT-2 style) | Eliminates unknown tokens for any Unicode input — every byte gets an initial token | Character-level (BERT style) | None in practice; byte-level is strictly more general |
 | `</w>` END_OF_WORD marker | Distinguishes word-final tokens from prefixes; without it "the" and "there" incorrectly share tokens | Whitespace attached to token start (tiktoken style) | Slightly larger vocab; far easier to reason about |
-| `merge_rank` dict for O(1) lookup | At inference, rank lookup is on the hot path per merge step — O(1) vs O(n) list scan is the difference between 151K/sec and ~5K/sec | Ordered list scan | None — dict is strictly faster |
+| `merge_rank` dict for O(1) lookup | At inference, rank lookup is on the hot path per merge step — O(1) dict lookup is much faster than O(n) list scan | Ordered list scan | None — dict is strictly faster |
 | Sorted tie-breaking in `max()` | Training is deterministic across runs and platforms | Random tie-breaking | Marginally slower max() call |
 | Zero external dependencies | Core functionality has no runtime deps — installable in any environment including security-restricted CI | numpy for speed | ~20% slower than vectorized pair counting |
 
 ## Benchmarks
 
 Measured on MacBook Pro M2, Python 3.14, training corpus 292K chars.
+Run `make bench` to measure current performance on your system.
 
 | Metric | BPE (vocab=1000) | WordPiece (vocab=600) |
 |--------|-----------------|----------------------|
-| Encoding throughput | 151,318 tokens/sec | 536,218 tokens/sec |
+| Encoding throughput | ~150-180 tokens/sec | ~400-500 tokens/sec |
 | Compression ratio | 3.02 chars/token | 1.77 chars/token |
-| Training time (292K chars) | 0.59s | 0.60s |
 | Memory (1K vocab) | ~110 KB | minimal |
 
 ### Vocabulary Size vs Compression
