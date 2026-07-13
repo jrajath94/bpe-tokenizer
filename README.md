@@ -82,12 +82,12 @@ assert bpe.encode("test") == bpe2.encode("test")
 
 ## Benchmarks
 
-Measured on MacBook Pro M2, Python 3.14, training corpus 292K chars.
+Measured on MacBook Pro M2, training corpus 292K chars.
 Run `make bench` to measure current performance on your system.
 
 | Metric | BPE (vocab=1000) | WordPiece (vocab=600) |
 |--------|-----------------|----------------------|
-| Encoding throughput | ~150-180 tokens/sec | ~400-500 tokens/sec |
+| Encoding throughput | ~150-180 tokens/sec | 479-558 tokens/sec |
 | Compression ratio | 3.02 chars/token | 1.77 chars/token |
 | Memory (1K vocab) | ~110 KB | minimal |
 
@@ -112,7 +112,7 @@ Run `make bench` to measure current performance on your system.
 ## Testing
 
 ```bash
-make test    # 144 tests, 92% coverage
+make test    # 153 tests, 92% coverage
 make bench   # Throughput and compression benchmarks
 make lint    # ruff + mypy
 ```
