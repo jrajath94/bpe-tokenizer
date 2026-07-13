@@ -1,9 +1,8 @@
 # bpe-tokenizer
 
-> From-scratch BPE and WordPiece tokenization in pure Python — zero dependencies, 92% test coverage.
+> From-scratch BPE and WordPiece tokenization in pure Python — zero dependencies.
 
 [![CI](https://github.com/jrajath94/bpe-tokenizer/actions/workflows/ci.yml/badge.svg)](https://github.com/jrajath94/bpe-tokenizer/actions/workflows/ci.yml)
-[![Coverage](https://img.shields.io/badge/coverage-92%25-brightgreen)](https://github.com/jrajath94/bpe-tokenizer)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -112,12 +111,12 @@ Run `make bench` to measure current performance on your system.
 ## Testing
 
 ```bash
-make test    # 153 tests, 92% coverage
+make test    # Unit tests against HuggingFace reference outputs
 make bench   # Throughput and compression benchmarks
 make lint    # ruff + mypy
 ```
 
-The test suite includes parametrized roundtrip tests verifying `decode(encode(text)) == text` for all ASCII inputs. This is the critical correctness invariant — a tokenizer that fails roundtrip is lossy by definition.
+The test suite includes parametrized roundtrip tests verifying `decode(encode(text)) == text` for all ASCII inputs, unit-tested against HuggingFace reference outputs. This is the critical correctness invariant — a tokenizer that fails roundtrip is lossy by definition.
 
 ## Project Structure
 
